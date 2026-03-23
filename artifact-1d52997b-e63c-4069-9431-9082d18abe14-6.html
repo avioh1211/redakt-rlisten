@@ -1,0 +1,871 @@
+
+                        <!DOCTYPE html>
+                        <html lang="en">
+                        <head>
+                            <meta charset="UTF-8">
+                            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+							<style>
+								body {
+									background-color: white; /* Ensure the iframe has a white background */
+								}
+
+								
+							</style>
+                        </head>
+                        <body>
+                            <!DOCTYPE html>
+<html lang="da">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Alinea Redaktørportal</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --primary: #4F46E5; --primary-dk: #3730A3;
+      --success: #10B981; --danger: #EF4444; --warning: #F59E0B;
+      --bg: #F8FAFC; --card: #FFFFFF; --text: #1E293B;
+      --muted: #64748B; --border: #E2E8F0; --radius: 12px;
+      --shadow: 0 4px 24px rgba(79,70,229,.10);
+    }
+    body { font-family: 'Segoe UI', system-ui, sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
+    nav { background: var(--primary); padding: 0 2rem; display: flex; align-items: center; justify-content: space-between; height: 64px; box-shadow: 0 2px 12px rgba(79,70,229,.3); position: sticky; top: 0; z-index: 100; }
+    .nav-brand { color: #fff; font-size: 1.3rem; font-weight: 700; display: flex; align-items: center; gap: .5rem; cursor: pointer; }
+    .nav-actions { display: flex; gap: .75rem; align-items: center; }
+    .btn { display: inline-flex; align-items: center; gap: .4rem; padding: .5rem 1.1rem; border-radius: 8px; font-size: .9rem; font-weight: 600; cursor: pointer; border: none; transition: all .18s; }
+    .btn-ghost { background: rgba(255,255,255,.15); color: #fff; }
+    .btn-ghost:hover { background: rgba(255,255,255,.28); }
+    .btn-primary { background: var(--primary); color: #fff; }
+    .btn-success { background: var(--success); color: #fff; }
+    .btn-danger { background: var(--danger); color: #fff; }
+    .btn-warning { background: var(--warning); color: #fff; }
+    .btn-sm { padding: .35rem .75rem; font-size: .82rem; }
+    .view-toggle { display: flex; gap: .5rem; }
+    .toggle-btn { background: rgba(255,255,255,.15); color: #fff; border: none; padding: .4rem .75rem; border-radius: 8px; cursor: pointer; font-size: 1rem; transition: all .18s; }
+    .toggle-btn.active, .toggle-btn:hover { background: rgba(255,255,255,.35); }
+    .view { display: none; }
+    .view.active { display: block; }
+    .hero { display: flex; flex-direction: column; align-items: center; padding: 3rem 1rem 1.5rem; text-align: center; }
+    .hero h1 { font-size: 2rem; font-weight: 800; color: var(--primary); margin-bottom: .4rem; }
+    .hero p { color: var(--muted); font-size: 1rem; margin-bottom: 1.8rem; }
+    .search-wrap { width: 100%; max-width: 560px; position: relative; }
+    .search-wrap input { width: 100%; padding: 1rem 1rem 1rem 3rem; font-size: 1.05rem; border: 2px solid var(--border); border-radius: var(--radius); outline: none; background: var(--card); box-shadow: var(--shadow); transition: border-color .2s, box-shadow .2s; }
+    .search-wrap input:focus { border-color: var(--primary); box-shadow: 0 0 0 4px rgba(79,70,229,.12); }
+    .search-icon { position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); color: var(--muted); font-size: 1.1rem; pointer-events: none; }
+    .clear-btn { position: absolute; right: .75rem; top: 50%; transform: translateY(-50%); background: none; border: none; cursor: pointer; color: var(--muted); font-size: 1.1rem; display: none; }
+    .stats-bar { display: flex; justify-content: center; gap: 1.5rem; flex-wrap: wrap; padding: .75rem 1rem 0; }
+    .stat-chip { background: var(--card); border: 1px solid var(--border); border-radius: 50px; padding: .4rem 1rem; font-size: .87rem; color: var(--muted); }
+    .stat-chip strong { color: var(--primary); }
+    .tabs-wrap { max-width: 1100px; margin: 1.5rem auto 0; padding: 0 1rem; }
+    .tabs { display: flex; overflow-x: auto; scrollbar-width: none; border-bottom: 2px solid var(--border); }
+    .tabs::-webkit-scrollbar { display: none; }
+    .tab-btn { padding: .7rem 1.1rem; border: none; background: none; cursor: pointer; font-size: .88rem; font-weight: 600; color: var(--muted); border-bottom: 3px solid transparent; margin-bottom: -2px; white-space: nowrap; transition: all .18s; display: flex; align-items: center; gap: .35rem; }
+    .tab-btn:hover { color: var(--primary); }
+    .tab-btn.active { color: var(--primary); border-bottom-color: var(--primary); background: rgba(79,70,229,.04); }
+    .tab-count { background: var(--border); color: var(--muted); padding: .1rem .5rem; border-radius: 50px; font-size: .73rem; }
+    .tab-btn.active .tab-count { background: var(--primary); color: #fff; }
+    .results-container { max-width: 1100px; margin: 1.5rem auto; padding: 0 1rem; }
+    .results-label { font-size: .88rem; color: var(--muted); margin-bottom: 1rem; }
+    .result-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 1rem 1.4rem; margin-bottom: .75rem; display: flex; align-items: center; gap: 1rem; box-shadow: 0 2px 8px rgba(0,0,0,.04); transition: box-shadow .2s, transform .2s; animation: fadeUp .2s ease both; }
+    .result-card:hover { box-shadow: var(--shadow); transform: translateY(-2px); }
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+    .rc-left { display: flex; align-items: center; gap: 1rem; flex: 1; min-width: 0; }
+    .rc-info { display: flex; flex-direction: column; gap: .25rem; min-width: 0; }
+    .rc-product { font-weight: 700; font-size: 1rem; }
+    .rc-category { display: inline-block; font-size: .73rem; font-weight: 700; padding: .18rem .65rem; border-radius: 50px; width: fit-content; }
+    .rc-editor { font-size: .9rem; color: var(--muted); }
+    .rc-editor strong { color: var(--text); }
+    .rc-email-row { display: flex; align-items: center; gap: .4rem; margin-top: .1rem; }
+    .email-text { font-size: .85rem; color: var(--muted); }
+    .missing-badge { display: inline-flex; align-items: center; gap: .3rem; background: #FFFBEB; border: 1px solid #FCD34D; color: #D97706; font-size: .78rem; font-weight: 600; padding: .18rem .6rem; border-radius: 50px; }
+    .copy-btn { display: inline-flex; align-items: center; gap: .25rem; background: #F1F5F9; border: 1px solid var(--border); border-radius: 6px; padding: .2rem .55rem; font-size: .75rem; font-weight: 600; color: var(--muted); cursor: pointer; transition: all .15s; }
+    .copy-btn:hover { background: var(--primary); color: #fff; border-color: var(--primary); }
+    .copy-btn.copied { background: var(--success); color: #fff; border-color: var(--success); }
+    .avatar { width: 44px; height: 44px; border-radius: 50%; color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: .95rem; flex-shrink: 0; }
+    .cards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1rem; }
+    .product-card { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 1.4rem; display: flex; flex-direction: column; gap: .75rem; box-shadow: 0 2px 8px rgba(0,0,0,.04); transition: box-shadow .2s, transform .2s; animation: fadeUp .2s ease both; position: relative; overflow: hidden; }
+    .product-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: var(--cat-color, var(--primary)); }
+    .product-card:hover { box-shadow: var(--shadow); transform: translateY(-3px); }
+    .pc-header { display: flex; align-items: flex-start; justify-content: space-between; gap: .75rem; }
+    .pc-title { font-weight: 800; font-size: 1rem; line-height: 1.3; }
+    .pc-cat { font-size: .72rem; font-weight: 700; padding: .2rem .7rem; border-radius: 50px; white-space: nowrap; }
+    .pc-divider { height: 1px; background: var(--border); }
+    .pc-editor-row { display: flex; align-items: center; gap: .75rem; }
+    .pc-avatar { width: 38px; height: 38px; border-radius: 50%; color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: .85rem; flex-shrink: 0; }
+    .pc-editor-info { display: flex; flex-direction: column; gap: .15rem; }
+    .pc-editor-name { font-weight: 600; font-size: .9rem; }
+    .pc-editor-label { font-size: .75rem; color: var(--muted); }
+    .pc-email-row { display: flex; align-items: center; justify-content: space-between; background: #F8FAFC; border: 1px solid var(--border); border-radius: 8px; padding: .5rem .75rem; }
+    .pc-email-text { font-size: .82rem; color: var(--muted); font-family: monospace; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .no-results { text-align: center; padding: 3rem 1rem; color: var(--muted); }
+    .no-results .emoji { font-size: 2.5rem; margin-bottom: .75rem; }
+    .no-results h3 { font-size: 1.1rem; margin-bottom: .3rem; color: var(--text); }
+    .admin-wrap { max-width: 1100px; margin: 2rem auto; padding: 0 1rem; }
+    .admin-header { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 1rem; }
+    .admin-header h2 { font-size: 1.5rem; font-weight: 800; }
+    .admin-controls { display: flex; gap: .75rem; align-items: center; flex-wrap: wrap; }
+    .admin-search { padding: .55rem 1rem; border: 2px solid var(--border); border-radius: 8px; font-size: .93rem; outline: none; min-width: 200px; }
+    .admin-search:focus { border-color: var(--primary); }
+    .csv-upload-zone { border: 2px dashed var(--border); border-radius: var(--radius); padding: 1.5rem; text-align: center; cursor: pointer; transition: all .2s; background: var(--card); margin-bottom: 1.5rem; position: relative; }
+    .csv-upload-zone:hover, .csv-upload-zone.drag-over { border-color: var(--primary); background: #EEF2FF; }
+    .csv-upload-zone input[type="file"] { position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%; }
+    .csv-upload-icon { font-size: 2rem; margin-bottom: .5rem; }
+    .csv-upload-zone h4 { font-size: 1rem; font-weight: 700; margin-bottom: .3rem; }
+    .csv-upload-zone p { font-size: .85rem; color: var(--muted); }
+    .csv-format-hint { display: inline-flex; align-items: center; gap: .5rem; background: #F1F5F9; border: 1px solid var(--border); border-radius: 8px; padding: .5rem 1rem; font-size: .82rem; color: var(--muted); margin-top: .75rem; font-family: monospace; }
+    .danger-zone { background: #FEF2F2; border: 1px solid #FECACA; border-radius: var(--radius); padding: 1.25rem 1.5rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; margin-bottom: 1.5rem; }
+    .danger-zone-info h4 { font-size: .95rem; font-weight: 700; color: var(--danger); margin-bottom: .2rem; }
+    .danger-zone-info p { font-size: .83rem; color: #B91C1C; }
+    .csv-preview { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.25rem 1.5rem; margin-bottom: 1.5rem; display: none; }
+    .csv-preview h4 { font-size: 1rem; font-weight: 700; margin-bottom: 1rem; }
+    .csv-preview-table { width: 100%; border-collapse: collapse; font-size: .88rem; }
+    .csv-preview-table th { background: #F1F5F9; padding: .6rem 1rem; text-align: left; font-size: .8rem; font-weight: 700; color: var(--muted); text-transform: uppercase; border-bottom: 1px solid var(--border); }
+    .csv-preview-table td { padding: .55rem 1rem; border-bottom: 1px solid var(--border); }
+    .csv-preview-table tr:last-child td { border-bottom: none; }
+    .csv-preview-actions { display: flex; gap: .75rem; margin-top: 1rem; justify-content: flex-end; }
+    .csv-info-bar { display: flex; align-items: center; gap: 1rem; margin-bottom: .75rem; flex-wrap: wrap; }
+    .csv-badge { background: #ECFDF5; color: #059669; border: 1px solid #6EE7B7; padding: .25rem .75rem; border-radius: 50px; font-size: .82rem; font-weight: 600; }
+    .csv-badge.warning { background: #FFFBEB; color: #D97706; border-color: #FCD34D; }
+    .csv-badge.error { background: #FEF2F2; color: #DC2626; border-color: #FCA5A5; }
+    .admin-table-wrap { background: var(--card); border-radius: var(--radius); border: 1px solid var(--border); overflow: hidden; box-shadow: var(--shadow); }
+    table { width: 100%; border-collapse: collapse; }
+    thead { background: #F1F5F9; }
+    thead th { padding: .9rem 1.2rem; text-align: left; font-size: .82rem; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: .5px; border-bottom: 1px solid var(--border); }
+    tbody tr { border-bottom: 1px solid var(--border); transition: background .15s; }
+    tbody tr:last-child { border-bottom: none; }
+    tbody tr:hover { background: #F8FAFC; }
+    tbody td { padding: .8rem 1.2rem; font-size: .91rem; vertical-align: middle; }
+    .td-cat span { display: inline-block; padding: .2rem .7rem; border-radius: 50px; font-size: .77rem; font-weight: 600; }
+    .td-actions { display: flex; gap: .5rem; }
+    .admin-email-cell { display: flex; align-items: center; gap: .4rem; }
+    .admin-email-text { font-size: .85rem; color: var(--muted); font-family: monospace; }
+    .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(15,23,42,.45); z-index: 200; align-items: center; justify-content: center; }
+    .modal-overlay.open { display: flex; }
+    .modal { background: var(--card); border-radius: 16px; padding: 2rem; width: 100%; max-width: 460px; box-shadow: 0 20px 60px rgba(0,0,0,.2); animation: modalIn .2s ease; }
+    @keyframes modalIn { from { opacity: 0; transform: scale(.93) translateY(12px); } to { opacity: 1; transform: scale(1) translateY(0); } }
+    .modal h3 { font-size: 1.3rem; font-weight: 800; margin-bottom: 1.4rem; }
+    .form-group { margin-bottom: 1rem; }
+    .form-group label { display: block; font-size: .85rem; font-weight: 600; color: var(--muted); margin-bottom: .35rem; }
+    .form-group input, .form-group select { width: 100%; padding: .7rem 1rem; border: 2px solid var(--border); border-radius: 8px; font-size: .95rem; outline: none; transition: border-color .2s; }
+    .form-group input:focus, .form-group select:focus { border-color: var(--primary); }
+    .modal-actions { display: flex; gap: .75rem; justify-content: flex-end; margin-top: 1.5rem; }
+    .confirm-overlay { display: none; position: fixed; inset: 0; background: rgba(15,23,42,.55); z-index: 400; align-items: center; justify-content: center; }
+    .confirm-overlay.open { display: flex; }
+    .confirm-card { background: var(--card); border-radius: 16px; padding: 2rem; width: 100%; max-width: 400px; box-shadow: 0 20px 60px rgba(0,0,0,.25); animation: modalIn .2s ease; text-align: center; }
+    .confirm-icon { font-size: 2.5rem; margin-bottom: .75rem; }
+    .confirm-card h3 { font-size: 1.2rem; font-weight: 800; margin-bottom: .5rem; }
+    .confirm-card p { color: var(--muted); font-size: .92rem; margin-bottom: 1.5rem; }
+    .confirm-actions { display: flex; gap: .75rem; justify-content: center; }
+    .login-overlay { display: none; position: fixed; inset: 0; background: rgba(15,23,42,.6); z-index: 300; align-items: center; justify-content: center; }
+    .login-overlay.open { display: flex; }
+    .login-card { background: var(--card); border-radius: 20px; padding: 2.5rem; width: 100%; max-width: 380px; box-shadow: 0 24px 64px rgba(0,0,0,.25); text-align: center; animation: modalIn .22s ease; }
+    .login-card .lock-icon { font-size: 2.5rem; margin-bottom: .75rem; }
+    .login-card h3 { font-size: 1.4rem; font-weight: 800; margin-bottom: .4rem; }
+    .login-card p { color: var(--muted); font-size: .9rem; margin-bottom: 1.5rem; }
+    .login-error { color: var(--danger); font-size: .85rem; margin-top: .5rem; display: none; }
+    .toast { position: fixed; bottom: 1.5rem; right: 1.5rem; background: var(--text); color: #fff; padding: .8rem 1.3rem; border-radius: 10px; font-size: .92rem; font-weight: 500; box-shadow: 0 8px 24px rgba(0,0,0,.2); z-index: 500; display: none; align-items: center; gap: .5rem; }
+    .toast.show { display: flex; }
+    .toast.success { background: var(--success); }
+    .toast.danger { background: var(--danger); }
+    .toast.warning { background: var(--warning); }
+    @media (max-width: 640px) { .hero h1 { font-size: 1.6rem; } .cards-grid { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-brand" onclick="showView('search')"><span>📚</span> Alinea Redaktørportal</div>
+  <div class="nav-actions">
+    <div class="view-toggle">
+      <button class="toggle-btn active" id="btnList" onclick="setDisplayMode('list')">☰</button>
+      <button class="toggle-btn" id="btnCard" onclick="setDisplayMode('card')">⊞</button>
+    </div>
+    <button class="btn btn-ghost" onclick="showView('search')">🔍 Søg</button>
+    <button class="btn btn-ghost" onclick="requireLogin()">⚙️ Admin</button>
+  </div>
+</nav>
+
+<!-- SEARCH VIEW -->
+<div class="view active" id="view-search">
+  <div class="hero">
+    <h1>Find redaktøren 🎯</h1>
+    <p>Skriv et produktnavn og se hvem der er ansvarlig redaktør</p>
+    <div class="search-wrap">
+      <span class="search-icon">🔍</span>
+      <input type="text" id="searchInput" placeholder="F.eks. Dynamo, Format, Ach So..." oninput="onSearch(this.value)" autocomplete="off"/>
+      <button class="clear-btn" id="clearBtn" onclick="clearSearch()">✕</button>
+    </div>
+  </div>
+  <div class="stats-bar" id="statsBar"></div>
+  <div class="tabs-wrap"><div class="tabs" id="tabsRow"></div></div>
+  <div class="results-container">
+    <div class="results-label" id="resultsLabel"></div>
+    <div id="resultsGrid"></div>
+  </div>
+</div>
+
+<!-- ADMIN VIEW -->
+<div class="view" id="view-admin">
+  <div class="admin-wrap">
+    <div class="admin-header">
+      <div>
+        <h2>⚙️ Admin Panel</h2>
+        <p style="color:var(--muted);font-size:.9rem;margin-top:.2rem">Rediger, tilføj, importér og slet produkter</p>
+      </div>
+      <div class="admin-controls">
+        <input class="admin-search" type="text" placeholder="Filtrer i tabellen..." oninput="filterAdminTable(this.value)"/>
+        <button class="btn btn-success" onclick="openModal('add')">＋ Tilføj produkt</button>
+        <button class="btn btn-sm" style="background:var(--muted);color:#fff;" onclick="adminLogout()">🚪 Log ud</button>
+      </div>
+    </div>
+
+    <div class="csv-upload-zone" id="csvZone" ondragover="onDragOver(event)" ondragleave="onDragLeave(event)" ondrop="onDrop(event)">
+      <input type="file" accept=".csv,.txt" onchange="handleCSVFile(this.files[0])" id="csvFileInput"/>
+      <div class="csv-upload-icon">📂</div>
+      <h4>Upload CSV-fil</h4>
+      <p>Træk og slip din CSV-fil her, eller klik for at vælge</p>
+      <div class="csv-format-hint">📋 Kolonner: <strong>Produktnavn</strong> | <strong>Redaktørnavn</strong> | <strong>E-mail</strong></div>
+      <p style="font-size:.78rem;color:var(--muted);margin-top:.5rem">Understøtter semikolon (;) og komma (,)</p>
+    </div>
+
+    <div class="csv-preview" id="csvPreview">
+      <h4>👀 Forhåndsvisning</h4>
+      <div class="csv-info-bar" id="csvInfoBar"></div>
+      <div style="overflow-x:auto;">
+        <table class="csv-preview-table">
+          <thead><tr><th>#</th><th>Produktnavn</th><th>Redaktørnavn</th><th>E-mail</th><th>Status</th></tr></thead>
+          <tbody id="csvPreviewBody"></tbody>
+        </table>
+      </div>
+      <div class="csv-preview-actions">
+        <button class="btn" style="background:var(--border);color:var(--text);" onclick="cancelCSV()">✕ Annuller</button>
+        <button class="btn btn-warning" onclick="importCSV('merge')">🔀 Flette med eksisterende</button>
+        <button class="btn btn-success" onclick="importCSV('replace')">✅ Erstat alt</button>
+      </div>
+    </div>
+
+    <div class="danger-zone">
+      <div class="danger-zone-info">
+        <h4>⚠️ Slet alle produkter</h4>
+        <p>Kan ikke fortrydes. Alle <strong id="totalCount">0</strong> produkter slettes permanent.</p>
+      </div>
+      <button class="btn btn-danger" onclick="confirmDeleteAll()">🗑️ Slet alt</button>
+    </div>
+
+    <div class="admin-table-wrap">
+      <table>
+        <thead>
+          <tr><th>#</th><th>Produkt</th><th>Kategori</th><th>Redaktør</th><th>E-mail</th><th>Handlinger</th></tr>
+        </thead>
+        <tbody id="adminTableBody"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- CONFIRM MODAL -->
+<div class="confirm-overlay" id="confirmOverlay">
+  <div class="confirm-card">
+    <div class="confirm-icon">🗑️</div>
+    <h3>Er du helt sikker?</h3>
+    <p id="confirmMsg">Denne handling kan ikke fortrydes.</p>
+    <div class="confirm-actions">
+      <button class="btn" style="background:var(--border);color:var(--text);min-width:120px;" onclick="closeConfirm()">Annuller</button>
+      <button class="btn btn-danger" style="min-width:120px;" id="confirmActionBtn">Ja, slet alt</button>
+    </div>
+  </div>
+</div>
+
+<!-- ADD/EDIT MODAL -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal">
+    <h3 id="modalTitle">Tilføj produkt</h3>
+    <div class="form-group"><label>Produktnavn *</label><input type="text" id="mProduct" placeholder="F.eks. Dynamo"/></div>
+    <div class="form-group">
+      <label>Kategori *</label>
+      <select id="mCategory">
+        <option>Dansk</option>
+        <option>Matematik</option>
+        <option>Sprog</option>
+        <option>Portaler</option>
+        <option>Erhvervsuddannelse</option>
+        <option>Gymnasium</option>
+        <option>Andet</option>
+      </select>
+    </div>
+    <div class="form-group"><label>Redaktør</label><input type="text" id="mEditor" placeholder="F.eks. Malene Christensen"/></div>
+    <div class="form-group"><label>E-mail</label><input type="email" id="mEmail" placeholder="F.eks. mch@alinea.dk"/></div>
+    <div class="modal-actions">
+      <button class="btn" style="background:var(--border);color:var(--text);" onclick="closeModal()">Annuller</button>
+      <button class="btn btn-success" onclick="saveProduct()">💾 Gem</button>
+    </div>
+  </div>
+</div>
+
+<!-- LOGIN MODAL -->
+<div class="login-overlay" id="loginOverlay">
+  <div class="login-card">
+    <div class="lock-icon">🔐</div>
+    <h3>Admin Login</h3>
+    <p>Kun autoriserede brugere kan redigere data</p>
+    <div class="form-group"><input type="text" id="loginUser" placeholder="Brugernavn"/></div>
+    <div class="form-group"><input type="password" id="loginPass" placeholder="Adgangskode" onkeydown="if(event.key==='Enter') doLogin()"/></div>
+    <p class="login-error" id="loginError">❌ Forkert brugernavn eller adgangskode</p>
+    <div style="display:flex;gap:.75rem;margin-top:1rem;">
+      <button class="btn" style="flex:1;background:var(--border);color:var(--text);" onclick="closeLogin()">Annuller</button>
+      <button class="btn btn-primary" style="flex:1;" onclick="doLogin()">Log ind</button>
+    </div>
+    <p style="font-size:.78rem;color:var(--muted);margin-top:1rem;">Demo: <strong>admin</strong> / <strong>admin123</strong></p>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ═══════════════════════════════════════════════════
+// DATA – KUN FRA FIL [2] redaktørlisten webside.xlsx
+// Redaktørnavne og e-mails udfyldes via Admin-panelet
+// ═══════════════════════════════════════════════════
+let products = [
+
+  // ── DANSK [2] ──────────────────────────────────
+  { id:1,  product:"Dynamo",                          category:"Dansk",             editor:"", email:"" },
+  { id:2,  product:"Molevitten",                      category:"Dansk",             editor:"", email:"" },
+  { id:3,  product:"Skrivevejen",                     category:"Dansk",             editor:"", email:"" },
+  { id:4,  product:"Den første læsning",              category:"Dansk",             editor:"", email:"" },
+  { id:5,  product:"Kaliber",                         category:"Dansk",             editor:"", email:"" },
+  { id:6,  product:"Den sikre læsning",               category:"Dansk",             editor:"", email:"" },
+  { id:7,  product:"d'dansk",                         category:"Dansk",             editor:"", email:"" },
+  { id:8,  product:"Plot",                            category:"Dansk",             editor:"", email:"" },
+  { id:9,  product:"Tid til dansk",                   category:"Dansk",             editor:"", email:"" },
+  { id:10, product:"Gorilla",                         category:"Dansk",             editor:"", email:"" },
+  { id:11, product:"Superbog",                        category:"Dansk",             editor:"", email:"" },
+  { id:12, product:"Træningsbanden",                  category:"Dansk",             editor:"", email:"" },
+  { id:13, product:"Onlineprøver – retskrivning",     category:"Dansk",             editor:"", email:"" },
+  { id:14, product:"Onlineprøver – læsning",          category:"Dansk",             editor:"", email:"" },
+  { id:15, product:"Cooperative Learning",            category:"Dansk",             editor:"", email:"" },
+  { id:16, product:"Fart på dansk",                   category:"Dansk",             editor:"", email:"" },
+  { id:17, product:"Greb om",                         category:"Dansk",             editor:"", email:"" },
+  { id:18, product:"Lyt og læse",                     category:"Dansk",             editor:"", email:"" },
+  { id:19, product:"Læs og forstå",                   category:"Dansk",             editor:"", email:"" },
+  { id:20, product:"Ny Staveraket",                   category:"Dansk",             editor:"", email:"" },
+  { id:21, product:"Sprogkarrusellen",                category:"Dansk",             editor:"", email:"" },
+  { id:22, product:"Stavevejen",                      category:"Dansk",             editor:"", email:"" },
+  { id:23, product:"Tid til at skrive",               category:"Dansk",             editor:"", email:"" },
+  { id:24, product:"Turbo",                           category:"Dansk",             editor:"", email:"" },
+
+  // ── DANSK – PORTALER [2] ───────────────────────
+  { id:25, product:"Børnehaveklasseportalen",         category:"Portaler",          editor:"", email:"" },
+  { id:26, product:"Danskportalen",                   category:"Portaler",          editor:"", email:"" },
+
+  // ── MATEMATIK [2] ──────────────────────────────
+  { id:30, product:"Format",                          category:"Matematik",         editor:"", email:"" },
+  { id:31, product:"Kontext+",                        category:"Matematik",         editor:"", email:"" },
+  { id:32, product:"Matematrix",                      category:"Matematik",         editor:"", email:"" },
+  { id:33, product:"KIM",                             category:"Matematik",         editor:"", email:"" },
+  { id:34, product:"Klar til prøverne i matematik",   category:"Matematik",         editor:"", email:"" },
+  { id:35, product:"Klar, Parat, Tænk",               category:"Matematik",         editor:"", email:"" },
+  { id:36, product:"Mat 10",                          category:"Matematik",         editor:"", email:"" },
+  { id:37, product:"Reflex",                          category:"Matematik",         editor:"", email:"" },
+  { id:38, product:"Matematikfessor",                 category:"Matematik",         editor:"", email:"" },
+  { id:39, product:"Naturens Univers",                category:"Matematik",         editor:"", email:"" },
+  { id:40, product:"Sig'natur",                       category:"Matematik",         editor:"", email:"" },
+  { id:41, product:"Haver til maver",                 category:"Matematik",         editor:"", email:"" },
+
+  // ── MATEMATIK – PORTALER [2] ───────────────────
+  { id:42, product:"Biologiportalen",                 category:"Portaler",          editor:"", email:"" },
+  { id:43, product:"Fysik/kemiportalen",              category:"Portaler",          editor:"", email:"" },
+  { id:44, product:"Geografiportalen",                category:"Portaler",          editor:"", email:"" },
+  { id:45, product:"Matematikportalen",               category:"Portaler",          editor:"", email:"" },
+  { id:46, product:"Natur/teknologiportalen",         category:"Portaler",          editor:"", email:"" },
+  { id:47, product:"Teknologiforståelsesportalen",    category:"Portaler",          editor:"", email:"" },
+
+  // ── SPROG [2] ──────────────────────────────────
+  { id:50, product:"Ach So",                          category:"Sprog",             editor:"", email:"" },
+  { id:51, product:"Bingo",                           category:"Sprog",             editor:"", email:"" },
+  { id:52, product:"Check it out",                    category:"Sprog",             editor:"", email:"" },
+  { id:53, product:"A piece of cake",                 category:"Sprog",             editor:"", email:"" },
+  { id:54, product:"Chunks",                          category:"Sprog",             editor:"", email:"" },
+  { id:55, product:"Der Sprung",                      category:"Sprog",             editor:"", email:"" },
+  { id:56, product:"Du bist dran",                    category:"Sprog",             editor:"", email:"" },
+  { id:57, product:"Focus on",                        category:"Sprog",             editor:"", email:"" },
+  { id:58, product:"Français Formidable",             category:"Sprog",             editor:"", email:"" },
+  { id:59, product:"Mucho Mas",                       category:"Sprog",             editor:"", email:"" },
+  { id:60, product:"Momo",                            category:"Sprog",             editor:"", email:"" },
+  { id:61, product:"PS Praktisk Sprog",               category:"Sprog",             editor:"", email:"" },
+  { id:62, product:"Pit Stop",                        category:"Sprog",             editor:"", email:"" },
+  { id:63, product:"På sporet af historien",          category:"Sprog",             editor:"", email:"" },
+  { id:64, product:"Under samme himmel",              category:"Sprog",             editor:"", email:"" },
+  { id:65, product:"Yes we can",                      category:"Sprog",             editor:"", email:"" },
+
+  // ── SPROG – PORTALER [2] ───────────────────────
+  { id:66, product:"Samfundsfagportalen",             category:"Portaler",          editor:"", email:"" },
+  { id:67, product:"Historieportalen",                category:"Portaler",          editor:"", email:"" },
+  { id:68, product:"Billedkunstportalen",             category:"Portaler",          editor:"", email:"" },
+  { id:69, product:"Franskportalen",                  category:"Portaler",          editor:"", email:"" },
+  { id:70, product:"Idrætsportalen",                  category:"Portaler",          editor:"", email:"" },
+  { id:71, product:"Håndværk og designportalen",      category:"Portaler",          editor:"", email:"" },
+  { id:72, product:"Engelskportalen",                 category:"Portaler",          editor:"", email:"" },
+  { id:73, product:"Kristendomskundskabsportalen",    category:"Portaler",          editor:"", email:"" },
+  { id:74, product:"Madkundskabsportalen",            category:"Portaler",          editor:"", email:"" },
+  { id:75, product:"Musikportalen",                   category:"Portaler",          editor:"", email:"" },
+  { id:76, product:"Tyskportalen",                    category:"Portaler",          editor:"", email:"" },
+
+  // ── ERHVERVSUDDANNELSE [2] ─────────────────────
+  { id:80, product:"EUD/EUV/EUX – Tømrer, Murer, Maler, Frisør", category:"Erhvervsuddannelse", editor:"", email:"" },
+
+  // ── GYMNASIUM [2] ──────────────────────────────
+  { id:90, product:"Gymnasium – STX, HHX, HTX, HF",  category:"Gymnasium",         editor:"", email:"" },
+
+  // ── ANDET [2] ──────────────────────────────────
+  { id:95, product:"eXtra – Dansk som andet sprog",   category:"Andet",             editor:"", email:"" },
+];
+
+// ═══════════════════════════════════
+// CONFIG
+// ═══════════════════════════════════
+const CATEGORIES = ["Alle","Dansk","Matematik","Sprog","Portaler","Erhvervsuddannelse","Gymnasium","Andet"];
+
+const catColors = {
+  "Dansk":               { bg:"#ECFEFF", text:"#0891B2", bar:"#06B6D4" },
+  "Matematik":           { bg:"#EEF2FF", text:"#4F46E5", bar:"#4F46E5" },
+  "Sprog":               { bg:"#FDF2F8", text:"#DB2777", bar:"#EC4899" },
+  "Portaler":            { bg:"#F5F3FF", text:"#7C3AED", bar:"#8B5CF6" },
+  "Erhvervsuddannelse":  { bg:"#ECFDF5", text:"#059669", bar:"#10B981" },
+  "Gymnasium":           { bg:"#FFFBEB", text:"#D97706", bar:"#F59E0B" },
+  "Andet":               { bg:"#F8FAFC", text:"#475569", bar:"#64748B" },
+};
+
+const catEmoji = {
+  "Dansk":"📖","Matematik":"🔢","Sprog":"🌍","Portaler":"🌐",
+  "Erhvervsuddannelse":"🔧","Gymnasium":"🎓","Andet":"📁","Alle":"🔍"
+};
+
+// ═══════════════════════════════════
+// STATE
+// ═══════════════════════════════════
+let isLoggedIn  = false;
+let editingId   = null;
+let activeTab   = "Alle";
+let displayMode = "list";
+let nextId      = 200;
+let csvParsed   = [];
+const ADMIN_USER = "admin";
+const ADMIN_PASS = "admin123";
+
+// ═══════════════════════════════════
+// VIEWS
+// ═══════════════════════════════════
+function showView(name) {
+  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+  document.getElementById('view-' + name).classList.add('active');
+  if (name === 'admin') { renderAdminTable(''); updateTotalCount(); }
+  if (name === 'search') { renderStats(); renderTabs(); }
+}
+
+function setDisplayMode(mode) {
+  displayMode = mode;
+  document.getElementById('btnList').classList.toggle('active', mode === 'list');
+  document.getElementById('btnCard').classList.toggle('active', mode === 'card');
+  renderResults(document.getElementById('searchInput').value, activeTab);
+}
+
+// ═══════════════════════════════════
+// LOGIN
+// ═══════════════════════════════════
+function requireLogin() {
+  if (isLoggedIn) { showView('admin'); return; }
+  document.getElementById('loginOverlay').classList.add('open');
+  setTimeout(() => document.getElementById('loginUser').focus(), 100);
+}
+function closeLogin() {
+  document.getElementById('loginOverlay').classList.remove('open');
+  document.getElementById('loginError').style.display = 'none';
+}
+function doLogin() {
+  const u = document.getElementById('loginUser').value.trim();
+  const p = document.getElementById('loginPass').value;
+  if (u === ADMIN_USER && p === ADMIN_PASS) {
+    isLoggedIn = true; closeLogin(); showView('admin');
+    showToast('✅ Logget ind som admin', 'success');
+  } else {
+    document.getElementById('loginError').style.display = 'block';
+  }
+}
+function adminLogout() {
+  isLoggedIn = false; showView('search');
+  showToast('👋 Logget ud', 'success');
+}
+
+// ═══════════════════════════════════
+// SEARCH
+// ═══════════════════════════════════
+function onSearch(val) {
+  document.getElementById('clearBtn').style.display = val ? 'block' : 'none';
+  renderResults(val, activeTab);
+}
+function clearSearch() {
+  document.getElementById('searchInput').value = '';
+  document.getElementById('clearBtn').style.display = 'none';
+  renderResults('', activeTab);
+}
+
+// ═══════════════════════════════════
+// STATS & TABS
+// ═══════════════════════════════════
+function renderStats() {
+  const withEditor = products.filter(p => p.editor).length;
+  const missing    = products.filter(p => !p.editor || !p.email).length;
+  document.getElementById('statsBar').innerHTML = `
+    <div class="stat-chip">📦 <strong>${products.length}</strong> produkter</div>
+    <div class="stat-chip">✅ <strong>${withEditor}</strong> har redaktør</div>
+    <div class="stat-chip" style="background:#FFFBEB;border-color:#FCD34D;">
+      ⚠️ <strong style="color:#D97706">${missing}</strong> mangler info
+    </div>`;
+}
+
+function renderTabs() {
+  document.getElementById('tabsRow').innerHTML = CATEGORIES.map(cat => {
+    const count = cat === 'Alle' ? products.length : products.filter(p => p.category === cat).length;
+    return `<button class="tab-btn ${activeTab === cat ? 'active' : ''}" onclick="setTab('${cat}')">
+      ${catEmoji[cat]||''} ${cat} <span class="tab-count">${count}</span>
+    </button>`;
+  }).join('');
+}
+
+function setTab(cat) {
+  activeTab = cat; renderTabs();
+  renderResults(document.getElementById('searchInput').value, cat);
+}
+
+// ═══════════════════════════════════
+// RESULTS
+// ═══════════════════════════════════
+function renderResults(query, cat) {
+  const q    = query.toLowerCase().trim();
+  const grid = document.getElementById('resultsGrid');
+  const lbl  = document.getElementById('resultsLabel');
+
+  let filtered = products;
+  if (cat && cat !== 'Alle') filtered = filtered.filter(p => p.category === cat);
+  if (q) filtered = filtered.filter(p =>
+    p.product.toLowerCase().includes(q) ||
+    p.editor.toLowerCase().includes(q)  ||
+    p.email.toLowerCase().includes(q)
+  );
+
+  const showing = q || cat !== 'Alle';
+  lbl.textContent = showing ? `${filtered.length} resultat${filtered.length !== 1 ? 'er' : ''} fundet` : '';
+
+  if (!showing) { grid.innerHTML = ''; return; }
+  if (!filtered.length) {
+    grid.innerHTML = `<div class="no-results"><div class="emoji">🔍</div>
+      <h3>Ingen resultater${q ? ` for "${query}"` : ''}</h3>
+      <p>Prøv et andet søgeord eller skift faneblad</p></div>`;
+    return;
+  }
+  displayMode === 'card' ? renderCardView(filtered, q, grid) : renderListView(filtered, q, grid);
+}
+
+function renderListView(data, q, grid) {
+  grid.innerHTML = data.map((p, i) => {
+    const c = catColors[p.category] || catColors["Andet"];
+    const missing = !p.editor || !p.email;
+    return `
+      <div class="result-card" style="animation-delay:${i*.025}s;${missing ? 'border-left:3px solid #FCD34D;' : ''}">
+        <div class="rc-left">
+          <div class="avatar" style="background:linear-gradient(135deg,${c.bar},${c.bar}99)">${initials(p.editor)}</div>
+          <div class="rc-info">
+            <span class="rc-category" style="background:${c.bg};color:${c.text}">${catEmoji[p.category]||''} ${p.category}</span>
+            <div class="rc-product">${highlight(p.product, q)}</div>
+            <div class="rc-editor">Redaktør: <strong>${p.editor || '–'}</strong>
+              ${!p.editor ? '<span class="missing-badge">⚠️ Mangler redaktør</span>' : ''}
+            </div>
+            <div class="rc-email-row">
+              ${p.email
+                ? `<span class="email-text">${p.email}</span>
+                   <button class="copy-btn" onclick="copyEmail('${p.email}',this)">📋 Kopiér</button>`
+                : `<span class="missing-badge">⚠️ Mangler e-mail</span>`}
+            </div>
+          </div>
+        </div>
+      </div>`;
+  }).join('');
+}
+
+function renderCardView(data, q, grid) {
+  grid.innerHTML = `<div class="cards-grid">${data.map((p, i) => {
+    const c = catColors[p.category] || catColors["Andet"];
+    return `
+      <div class="product-card" style="--cat-color:${c.bar};animation-delay:${i*.025}s">
+        <div class="pc-header">
+          <div class="pc-title">${highlight(p.product, q)}</div>
+          <span class="pc-cat" style="background:${c.bg};color:${c.text}">${catEmoji[p.category]||''} ${p.category}</span>
+        </div>
+        <div class="pc-divider"></div>
+        <div class="pc-editor-row">
+          <div class="pc-avatar" style="background:linear-gradient(135deg,${c.bar},${c.bar}99)">${initials(p.editor)}</div>
+          <div class="pc-editor-info">
+            <span class="pc-editor-name">${p.editor || '–'}</span>
+            <span class="pc-editor-label">${!p.editor ? '⚠️ Mangler redaktør' : 'Redaktør'}</span>
+          </div>
+        </div>
+        <div class="pc-email-row">
+          ${p.email
+            ? `<span class="pc-email-text">${p.email}</span>
+               <button class="copy-btn" onclick="copyEmail('${p.email}',this)">📋 Kopiér</button>`
+            : `<span class="missing-badge">⚠️ Mangler e-mail</span>`}
+        </div>
+      </div>`;
+  }).join('')}</div>`;
+}
+
+// ═══════════════════════════════════
+// COPY EMAIL
+// ═══════════════════════════════════
+function copyEmail(email, btn) {
+  const done = () => {
+    btn.textContent = '✅ Kopieret!';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = '📋 Kopiér'; btn.classList.remove('copied'); }, 2000);
+  };
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(email).then(done).catch(() => fallbackCopy(email, done));
+  } else { fallbackCopy(email, done); }
+}
+function fallbackCopy(text, cb) {
+  const ta = document.createElement('textarea');
+  ta.value = text; document.body.appendChild(ta); ta.select();
+  document.execCommand('copy'); document.body.removeChild(ta); cb();
+}
+
+// ═══════════════════════════════════
+// HELPERS
+// ═══════════════════════════════════
+function highlight(text, q) {
+  if (!q) return text;
+  const re = new RegExp(`(${q.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')})`, 'gi');
+  return text.replace(re, '<mark style="background:#FEF08A;border-radius:3px;padding:0 2px">$1</mark>');
+}
+function initials(name) {
+  if (!name) return '?';
+  return name.split(' ').map(n => n[0]).slice(0,2).join('').toUpperCase();
+}
+function updateTotalCount() {
+  const el = document.getElementById('totalCount');
+  if (el) el.textContent = products.length;
+}
+
+// ═══════════════════════════════════
+// CSV
+// ═══════════════════════════════════
+function onDragOver(e) { e.preventDefault(); document.getElementById('csvZone').classList.add('drag-over'); }
+function onDragLeave()  { document.getElementById('csvZone').classList.remove('drag-over'); }
+function onDrop(e) {
+  e.preventDefault(); document.getElementById('csvZone').classList.remove('drag-over');
+  const file = e.dataTransfer.files[0]; if (file) handleCSVFile(file);
+}
+function handleCSVFile(file) {
+  if (!file) return;
+  const ext = file.name.split('.').pop().toLowerCase();
+  if (!['csv','txt'].includes(ext)) { showToast('⚠️ Kun CSV eller TXT filer', 'warning'); return; }
+  const reader = new FileReader();
+  reader.onload = e => parseAndPreviewCSV(e.target.result);
+  reader.readAsText(file, 'UTF-8');
+  document.getElementById('csvFileInput').value = '';
+}
+function parseAndPreviewCSV(text) {
+  const lines = text.split(/\r?\n/).filter(l => l.trim());
+  if (!lines.length) { showToast('❌ CSV-filen er tom', 'danger'); return; }
+  const sep = lines[0].includes(';') ? ';' : ',';
+  const parsed = [];
+  let startIdx = 0;
+  const firstCols = lines[0].split(sep);
+  if (firstCols.length >= 3 && !firstCols[2].includes('@')) startIdx = 1;
+
+  for (let i = startIdx; i < lines.length; i++) {
+    const cols = lines[i].split(sep).map(c => c.trim().replace(/^["']|["']$/g,''));
+    if (cols.length < 2) continue;
+    const product = cols[0] || '';
+    const editor  = cols[1] || '';
+    const email   = cols[2] || '';
+    const emailOk = !email || /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    parsed.push({ line: i+1, product, editor, email, valid: !!product, emailOk, productOk: !!product });
+  }
+
+  if (!parsed.length) { showToast('⚠️ Ingen gyldige rækker', 'warning'); return; }
+  csvParsed = parsed;
+
+  const valid   = parsed.filter(r => r.valid).length;
+  const invalid = parsed.filter(r => !r.valid).length;
+
+  document.getElementById('csvInfoBar').innerHTML = `
+    <span class="csv-badge">✅ ${valid} gyldige</span>
+    ${invalid ? `<span class="csv-badge warning">⚠️ ${invalid} med fejl</span>` : ''}
+    <span style="font-size:.82rem;color:var(--muted)">Separator: <strong>${sep===';'?'Semikolon':'Komma'}</strong></span>`;
+
+  document.getElementById('csvPreviewBody').innerHTML = parsed.slice(0,10).map(r => `
+    <tr style="background:${!r.valid ? '#FEF2F2' : ''}">
+      <td style="color:var(--muted);font-size:.8rem">${r.line}</td>
+      <td>${r.productOk ? r.product : `<span style="color:var(--danger)">⚠️ ${r.product||'(tom)'}</span>`}</td>
+      <td>${r.editor || '<em style="color:var(--muted)">–</em>'}</td>
+      <td>${r.emailOk ? (r.email||'–') : `<span style="color:var(--danger)">⚠️ ${r.email}</span>`}</td>
+      <td>${r.valid ? '<span style="color:var(--success);font-weight:700">✅</span>' : '<span style="color:var(--danger);font-weight:700">❌</span>'}</td>
+    </tr>`).join('') +
+    (parsed.length > 10 ? `<tr><td colspan="5" style="text-align:center;color:var(--muted);padding:1rem;font-size:.85rem">... og ${parsed.length-10} flere rækker</td></tr>` : '');
+
+  document.getElementById('csvPreview').style.display = 'block';
+}
+function cancelCSV() {
+  csvParsed = [];
+  document.getElementById('csvPreview').style.display = 'none';
+}
+function importCSV(mode) {
+  const valid = csvParsed.filter(r => r.valid);
+  if (!valid.length) { showToast('❌ Ingen gyldige rækker', 'danger'); return; }
+  const newProducts = valid.map(r => ({
+    id: nextId++, product: r.product, editor: r.editor, email: r.email,
+    category: guessCategory(r.product)
+  }));
+  if (mode === 'replace') { products = newProducts; showToast(`✅ ${newProducts.length} produkter importeret`, 'success'); }
+  else { products = [...products, ...newProducts]; showToast(`✅ ${newProducts.length} produkter tilføjet`, 'success'); }
+  cancelCSV(); renderAdminTable(''); renderStats(); renderTabs(); updateTotalCount();
+}
+function guessCategory(product) {
+  const p = product.toLowerCase();
+  if (/format|kontext|matematrix|kim|klar|mat |matematik|reflex|matematikfessor|naturens|sig.natur|haver/i.test(p)) return "Matematik";
+  if (/dynamo|molevitten|skrivevejen|første læsning|kaliber|sikre læsning|d.dansk|plot|tid til dansk|gorilla|superbog|træningsbanden|retskrivning|læsning|cooperative|fart på|greb om|lyt og|læs og|staveraket|sprogkarrusellen|stavevejen|tid til at|turbo/i.test(p)) return "Dansk";
+  if (/ach so|bingo|check it|piece of cake|chunks|sprung|bist dran|focus on|français|mucho|momo|praktisk|pit stop|sporet|samme himmel|yes we can/i.test(p)) return "Sprog";
+  if (/portal|villeby/i.test(p)) return "Portaler";
+  if (/eud|eux|euv|tøm|murer|maler|frisør/i.test(p)) return "Erhvervsuddannelse";
+  if (/stx|hhx|htx|hf|gymnas/i.test(p)) return "Gymnasium";
+  return "Andet";
+}
+
+// ═══════════════════════════════════
+// DELETE ALL
+// ═══════════════════════════════════
+function confirmDeleteAll() {
+  if (!products.length) { showToast('⚠️ Ingen produkter at slette', 'warning'); return; }
+  document.getElementById('confirmMsg').innerHTML = `Sletter <strong>alle ${products.length} produkter</strong>. Kan ikke fortrydes.`;
+  document.getElementById('confirmActionBtn').onclick = executeDeleteAll;
+  document.getElementById('confirmOverlay').classList.add('open');
+}
+function closeConfirm() { document.getElementById('confirmOverlay').classList.remove('open'); }
+function executeDeleteAll() {
+  const count = products.length;
+  products = []; closeConfirm();
+  renderAdminTable(''); renderStats(); renderTabs(); updateTotalCount();
+  showToast(`🗑️ ${count} produkter slettet`, 'danger');
+}
+
+// ═══════════════════════════════════
+// ADMIN TABLE
+// ═══════════════════════════════════
+function renderAdminTable(query) {
+  const q = query.toLowerCase();
+  const data = q
+    ? products.filter(p =>
+        p.product.toLowerCase().includes(q)  ||
+        p.editor.toLowerCase().includes(q)   ||
+        p.email.toLowerCase().includes(q)    ||
+        p.category.toLowerCase().includes(q))
+    : products;
+
+  document.getElementById('adminTableBody').innerHTML = data.length
+    ? data.map((p, i) => {
+        const c = catColors[p.category] || catColors["Andet"];
+        return `<tr>
+          <td style="color:var(--muted);font-size:.82rem">${i+1}</td>
+          <td><strong>${p.product}</strong></td>
+          <td class="td-cat"><span style="background:${c.bg};color:${c.text}">${p.category}</span></td>
+          <td>${p.editor || '<em style="color:#D97706">⚠️ Mangler</em>'}</td>
+          <td>
+            <div class="admin-email-cell">
+              <span class="admin-email-text">${p.email || '–'}</span>
+              ${p.email ? `<button class="copy-btn" onclick="copyEmail('${p.email}',this)">📋</button>` : ''}
+            </div>
+          </td>
+          <td class="td-actions">
+            <button class="btn btn-warning btn-sm" onclick="openModal('edit',${p.id})">✏️</button>
+            <button class="btn btn-danger btn-sm"  onclick="deleteProduct(${p.id})">🗑️</button>
+          </td>
+        </tr>`;
+      }).join('')
+    : `<tr><td colspan="6" style="text-align:center;padding:2rem;color:var(--muted)">Ingen produkter</td></tr>`;
+}
+function filterAdminTable(q) { renderAdminTable(q); }
+
+// ═══════════════════════════════════
+// MODAL
+// ═══════════════════════════════════
+function openModal(mode, id) {
+  editingId = null;
+  ['mProduct','mEditor','mEmail'].forEach(x => document.getElementById(x).value = '');
+  document.getElementById('mCategory').value = 'Dansk';
+  if (mode === 'edit') {
+    const p = products.find(x => x.id === id); if (!p) return;
+    editingId = id;
+    document.getElementById('modalTitle').textContent = '✏️ Rediger produkt';
+    document.getElementById('mProduct').value  = p.product;
+    document.getElementById('mEditor').value   = p.editor;
+    document.getElementById('mEmail').value    = p.email;
+    document.getElementById('mCategory').value = p.category;
+  } else {
+    document.getElementById('modalTitle').textContent = '➕ Tilføj produkt';
+  }
+  document.getElementById('modalOverlay').classList.add('open');
+}
+function closeModal() { document.getElementById('modalOverlay').classList.remove('open'); }
+function saveProduct() {
+  const product  = document.getElementById('mProduct').value.trim();
+  const editor   = document.getElementById('mEditor').value.trim();
+  const email    = document.getElementById('mEmail').value.trim();
+  const category = document.getElementById('mCategory').value;
+  if (!product) { showToast('⚠️ Produktnavn er påkrævet', 'warning'); return; }
+  if (editingId !== null) {
+    const idx = products.findIndex(p => p.id === editingId);
+    if (idx !== -1) products[idx] = { ...products[idx], product, editor, email, category };
+    showToast('✅ Produkt opdateret!', 'success');
+  } else {
+    products.push({ id: nextId++, product, editor, email, category });
+    showToast('✅ Produkt tilføjet!', 'success');
+  }
+  closeModal(); renderAdminTable(''); renderStats(); renderTabs(); updateTotalCount();
+}
+
+// ═══════════════════════════════════
+// DELETE ONE
+// ═══════════════════════════════════
+function deleteProduct(id) {
+  const p = products.find(x => x.id === id);
+  if (!p || !confirm(`Slet "${p.product}"?`)) return;
+  products = products.filter(x => x.id !== id);
+  renderAdminTable(''); renderStats(); renderTabs(); updateTotalCount();
+  showToast('🗑️ Produkt slettet', 'danger');
+}
+
+// ═══════════════════════════════════
+// TOAST
+// ═══════════════════════════════════
+function showToast(msg, type = '') {
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.className = 'toast show ' + type;
+  setTimeout(() => t.classList.remove('show'), 3500);
+}
+
+// ═══════════════════════════════════
+// INIT
+// ═══════════════════════════════════
+renderStats();
+renderTabs();
+</script>
+</body>
+</html>
+
+							<script>
+                            	
+							</script>
+                        </body>
+                        </html>
+                    
